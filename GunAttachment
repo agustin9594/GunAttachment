@@ -1,0 +1,110 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace Invector.vShooter
+{
+    public class GunAttachment : MonoBehaviour
+    {
+        public GameObject[] gunParts;
+        //public string gunPartsName;
+        public int gunPartID;
+        int magazineID;
+
+        void Start()
+        {
+            gunParts = new GameObject[transform.childCount];
+
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                gunParts[i] = transform.GetChild(i).gameObject;
+            }
+
+            foreach (GameObject gunPart in gunParts)
+            {
+                gunPart.SetActive(false);
+            }
+
+            switch (gameObject.name)
+            {
+                case "Barrels":
+                    gunPartID = vShooterManager.currentWeaponIKAdjust.BarrelID;
+                    Debug.Log(vShooterManager.currentWeaponIKAdjust.BarrelID);
+                    break;
+                case "Magazines":
+                    gunPartID = vShooterManager.currentWeaponIKAdjust.MagazineID;
+                    Debug.Log(vShooterManager.currentWeaponIKAdjust.MagazineID);
+                    break;
+                case "Stocks":
+                    gunPartID = vShooterManager.currentWeaponIKAdjust.StockID;
+                    break;
+                case "Scopes":
+                    gunPartID = vShooterManager.currentWeaponIKAdjust.ScopeID;
+                    break;
+                case "Grips":
+                    gunPartID = vShooterManager.currentWeaponIKAdjust.GripID;
+                    break;
+                case "Supressors":
+                    gunPartID = vShooterManager.currentWeaponIKAdjust.SupressorID;
+                    break;
+                case "Accesories":
+                    gunPartID = vShooterManager.currentWeaponIKAdjust.AccesoryID;
+                    break;
+            }
+
+            if (gunParts[gunPartID])
+                gunParts[gunPartID].SetActive(true);
+        }
+
+        public void GunParts()
+        {
+            gunParts[gunPartID].SetActive(false);
+
+            gunPartID++;
+            if (gunPartID >= gunParts.Length)
+                gunPartID = 0;
+
+            gunParts[gunPartID].SetActive(true);
+
+            switch (gameObject.name)
+            {
+                case "Barrels":
+                    vShooterManager.currentWeaponIKAdjust.BarrelID = gunPartID;
+                    break;
+                case "Magazines":
+                    vShooterManager.currentWeaponIKAdjust.MagazineID = gunPartID;
+                    break;
+                case "Stocks":
+                    vShooterManager.currentWeaponIKAdjust.StockID = gunPartID;
+                    break;
+                case "Scopes":
+                    vShooterManager.currentWeaponIKAdjust.ScopeID = gunPartID;
+                    break;
+                case "Grips":
+                    vShooterManager.currentWeaponIKAdjust.GripID = gunPartID;
+                    break;
+                case "Supressors":
+                    vShooterManager.currentWeaponIKAdjust.SupressorID = gunPartID;
+                    break;
+                case "Accesories":
+                    vShooterManager.currentWeaponIKAdjust.AccesoryID = gunPartID;
+                    break;
+            }
+        }
+
+        public void Magazines()
+        {
+            magazineID = vShooterManager.currentWeaponIKAdjust.MagazineID;
+
+            gunParts[magazineID].SetActive(false);
+
+            magazineID++;
+            if (magazineID >= gunParts.Length)
+                magazineID = 0;
+
+            gunParts[magazineID].SetActive(true);
+
+            vShooterManager.currentWeaponIKAdjust.MagazineID = magazineID;
+        }
+    }
+}
